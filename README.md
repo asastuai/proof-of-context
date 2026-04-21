@@ -3,13 +3,13 @@
 ### A position paper on the missing verification layer in decentralized ML protocols
 
 **Author:** Juan Cruz Maisu · Buenos Aires, Argentina
-**Version 0.1** · **Published: 21 April 2026**
+**Version 0.2** · **Published: 21 April 2026** *(revised from v0.1 same day — expanded Related Work, tightened claims)*
 
 ---
 
 ## TL;DR
 
-Decentralized ML protocols verify that *computations are correct*. They do not yet verify that *computations were performed in the right context.* The gap — which this paper names **proof-of-context** — is the structural analogue of the oracle-freshness problem that cost DeFi billions between 2020 and 2024. This repository holds the initial position paper establishing the term, the framing, and the research program.
+Decentralized ML protocols verify that *computations are correct*. A substantial literature in federated learning addresses *model staleness* as a scheduling and weighting concern. Neither unifies these into a *verification-primitive layer* that would let the protocol refuse to pay for contextually-inappropriate contributions at contribution time. This paper names the unified gap **proof-of-context**, maps its structural analogue to the DeFi oracle-freshness problem (2020–2024), and sketches constraints for a viable construction. The contribution is the naming, the unification, the cross-domain analogy, and the extension from training into attention-based inference — not the discovery that staleness exists, which is well-studied.
 
 ---
 
@@ -30,7 +30,7 @@ Decentralized ML protocols verify that *computations are correct*. They do not y
   month={4},
   day={21},
   howpublished={Position paper, \url{https://github.com/asastuai/proof-of-context}},
-  note={Version 0.1}
+  note={Version 0.2}
 }
 ```
 

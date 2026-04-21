@@ -7,7 +7,7 @@ authors:
     orcid: ""
     affiliation: "Independent Researcher, Buenos Aires, Argentina"
     email: "juancmaisu@outlook.com"
-version: "0.1"
+version: "0.2"
 date-released: "2026-04-21"
 url: "https://github.com/asastuai/proof-of-context"
 license: "CC-BY-4.0"
@@ -24,12 +24,18 @@ keywords:
 abstract: >
   Decentralized machine-learning protocols have made significant progress on
   verification primitives such as proof-of-learning (e.g., Gensyn) and zkML +
-  TEE attestations (e.g., OpenGradient). All verify that computations were
-  executed correctly. None verify that the worker was operating in a
-  contextually appropriate state. This position paper names the gap —
-  proof-of-context — identifies its structural analogue in the oracle-freshness
-  problem of decentralized finance, enumerates four modes of context failure
-  invisible to existing verification primitives, and sketches constraints any
-  viable proof-of-context construction must satisfy. This document establishes
-  the term and framing as of its publication date for purposes of academic
-  priority.
+  TEE attestations (e.g., OpenGradient). A substantial body of work in
+  federated learning also addresses model staleness, asynchronous coordination,
+  and training-verification spoofability, largely as domain-specific scheduling
+  concerns. This position paper argues that these fragments are facets of a
+  single gap — proof-of-context — and that the gap is most productively treated
+  as a verification-primitive layer rather than only as scheduling correctness.
+  It is the structural analogue, in ML protocols, of the oracle-freshness
+  problem that accounts for the majority of value-stolen exploits in
+  decentralized finance (2020–2024). The paper identifies four recurring modes
+  of context failure, draws the DeFi analogy explicitly, situates the
+  contribution relative to existing staleness-aware federated learning and
+  proof-of-learning robustness literature, and sketches constraints for a
+  viable construction. The contribution is the naming, the unification, the
+  cross-domain analogy, and the extension into attention-based inference —
+  not the discovery that staleness exists.
