@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Proof-of-Context: The Missing Verification Layer in Decentralized ML Protocols"
+authors:
+  - family-names: "Maisu"
+    given-names: "Juan Cruz"
+    orcid: ""
+    affiliation: "Independent Researcher, Buenos Aires, Argentina"
+    email: "juancmaisu@outlook.com"
+version: "0.1"
+date-released: "2026-04-21"
+url: "https://github.com/asastuai/proof-of-context"
+license: "CC-BY-4.0"
+type: "article"
+repository-code: "https://github.com/asastuai/proof-of-context"
+keywords:
+  - "verifiable computing"
+  - "decentralized machine learning"
+  - "proof-of-learning"
+  - "zkML"
+  - "oracle problem"
+  - "adversarial protocols"
+  - "cryptoeconomic design"
+abstract: >
+  Decentralized machine-learning protocols have made significant progress on
+  verification primitives such as proof-of-learning (e.g., Gensyn) and zkML +
+  TEE attestations (e.g., OpenGradient). All verify that computations were
+  executed correctly. None verify that the worker was operating in a
+  contextually appropriate state. This position paper names the gap —
+  proof-of-context — identifies its structural analogue in the oracle-freshness
+  problem of decentralized finance, enumerates four modes of context failure
+  invisible to existing verification primitives, and sketches constraints any
+  viable proof-of-context construction must satisfy. This document establishes
+  the term and framing as of its publication date for purposes of academic
+  priority.
