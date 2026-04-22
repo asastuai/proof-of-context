@@ -3,7 +3,7 @@
 **Juan Cruz Maisu**
 Buenos Aires, Argentina · juancmaisu@outlook.com · github.com/asastuai
 
-**Version 0.3** — **Published: 22 April 2026** (revised from v0.2 of 21 April 2026 after a 48-hour Phase 2 literature deep-dive covering four closest-adjacency papers, an obsessive arXiv scan for prior-art collisions, and a nine-protocol survey of production decentralized-ML verification stacks)
+**Version 0.3.1** — **Published: 22 April 2026** (reference corrections patch — see revision note; substantive content identical to v0.3 except where corrected titles/authors/dates affected in-text statements)
 
 ---
 
@@ -57,9 +57,9 @@ Each of these primitives verifies a dimension of computational correctness. Toge
 
 Our contribution sits at the intersection of several existing threads. We organize by overlap severity.
 
-**3.1 Staleness-aware federated and decentralized learning.** A substantial body of work in asynchronous federated learning has studied the effect of model staleness on training quality [5, 6, 7, 8]. Techniques include staleness-weighted gradient aggregation, temperature-controlled weighting, dynamic staleness control, and behavioral staleness metrics [6, 7, 8]. The decentralized-blockchain extension [9] quantified accuracy degradations of up to ~35% attributable to staleness and inconsistency in blockchained federated learning settings. Recent work integrating ZKP with staleness-aware aggregation on permissioned ledgers (ChainDrive-FL-VRA [23]; LiteChain [24]) covers the training half of our frame but does not name the primitive, does not address inference or prompt-cache, and does not import the DeFi-oracle analogy. The broader tradition treats staleness as a *coordination and weighting* problem. Our framing shifts the question to whether contextual appropriateness can be *verified* at contribution time, as a primitive, and refused rather than down-weighted.
+**3.1 Staleness-aware federated and decentralized learning.** A substantial body of work in asynchronous federated learning has studied the effect of model staleness on training quality [5, 6, 7, 8]. Techniques include staleness-weighted gradient aggregation, temperature-controlled weighting, dynamic staleness control, and behavioral staleness metrics [6, 7, 8]. The decentralized-blockchain extension [9] quantified accuracy degradations of up to ~35% attributable to staleness and inconsistency in blockchained federated learning settings. Recent work integrating blockchain with federated learning on edge networks [23] covers the training half of our frame but does not name the primitive, does not address inference or prompt-cache, and does not import the DeFi-oracle analogy. The broader tradition treats staleness as a *coordination and weighting* problem. Our framing shifts the question to whether contextual appropriateness can be *verified* at contribution time, as a primitive, and refused rather than down-weighted.
 
-**3.2 Proof-of-learning robustness.** The foundational construction of Jia et al. [1] was shown to be spoofable by subsequent analyses [2, 10]. Optimistic Verifiable Training [3] addresses nondeterminism specifically. The concern is orthogonal to ours: hardware nondeterminism is about whether the *same* computation can be reproduced bit-exactly, whereas contextual appropriateness is about whether the *right* computation was performed relative to the global state of the training run.
+**3.2 Proof-of-learning robustness.** The foundational construction of Jia et al. [1] was shown to be spoofable by subsequent analyses [2, 10]. Optimistic Verifiable Training [3] addresses nondeterminism specifically. The concern is orthogonal to ours: hardware nondeterminism is about whether the *same* computation can be reproduced bit-exactly, whereas contextual appropriateness is about whether the *right* computation was performed relative to the global state of the training run. Note that [10] (Fang et al., 2022) is a follow-up from the same research group as [1], documenting further spoofability surfaces beyond [2].
 
 **3.3 Verifiable-ML lifecycle taxonomies.** Recent surveys [4, 11] and the SoK of Bruschi et al. [19] partition ML verification into training, testing, inference, and (for FL) aggregation. The SoK's phase-based decomposition — Proof of Committed Data, Proof of Training, Proof of Aggregation — is the scaffold we extend. Proof-of-Context enters this scaffold as the fourth phase covering the post-training inference lifecycle, which the SoK explicitly excludes from its scope [19, §1.1]. A related framework [20] frames training+inference+unlearning as an end-to-end pipeline and enumerates its components; our contribution names the binding primitive that they enumerate. This taxonomy-level framing differs from the primitive-level framings surveyed below.
 
@@ -89,7 +89,7 @@ PAL\*M also operates under a *centralized-provider* threat model where a single 
 
 **3.10 Oracle freshness in DeFi.** The oracle problem in decentralized finance is not typically discussed in the ML literature, but it is directly relevant and underlies the analogy at the center of this paper. The use of time-weighted average prices (TWAPs), multi-source quorums, freshness thresholds, and per-block price deviation checks emerged as cryptoeconomic responses to what was initially treated as a data-quality concern — and is now understood as a verification-layer concern [12]. A recent exploration asks whether AI can *solve* the blockchain oracle problem [25]; our analogy runs in the opposite direction, importing DeFi's hard-won oracle-freshness discipline into ML verification. We argue the ML field is approximately where DeFi was in 2020 on this axis.
 
-**3.11 Adjacent concerns we flag but do not unify.** The RAG-security literature [26] identifies corpus-freshness and provenance-tracking as open problems. Enterprise governance frames such as Context Kubernetes [27] introduce freshness-aware state machines (fresh/stale/expired/conflicted) but in an orchestration rather than cryptographic register. Right to History [28] proposes verifiable agent-execution ledgers. These are related but distinct concerns — none is a cryptographic context-verification primitive under a decentralized threat model.
+**3.11 Adjacent concerns we flag but do not unify.** The RAG-security literature [24] identifies corpus-freshness and provenance-tracking as open problems. Enterprise governance frames such as Context Kubernetes [26] introduce freshness-aware state machines (fresh/stale/expired/conflicted) but in an orchestration rather than cryptographic register. Right to History [27] proposes verifiable agent-execution ledgers. These are related but distinct concerns — none is a cryptographic context-verification primitive under a decentralized threat model.
 
 **Summary.** The literature has surfaced most of the pieces — staleness concerns, spoofability gaps, nondeterminism controls, phase-specific verification primitives, inference-activation integrity, centralized-provider property attestation, within-context integrity, and cryptoeconomic-offensive staleness mechanisms. It has not, to our knowledge, named the unification, proposed the cross-domain DeFi analogy, extended the framing to prompt-cache integrity, or framed the problem as requiring a new composable verification primitive at the decentralized-marketplace protocol layer rather than better scheduling algorithms, stronger centralized attestations, and individually-hardened existing primitives.
 
@@ -195,67 +195,65 @@ This paper emerged from a 46-day human-AI research collaboration documented in t
 
 ## References
 
-[1] Jia, H., Yaghini, M., Choquette-Choo, C. A., Dullerud, N., Thudi, A., Chandrasekaran, V., & Papernot, N. (2021). *Proof-of-Learning: Definitions and Practice.* IEEE Symposium on Security and Privacy.
+[1] Jia, H., Yaghini, M., Choquette-Choo, C. A., Dullerud, N., Thudi, A., Chandrasekaran, V., & Papernot, N. (2021). *Proof-of-Learning: Definitions and Practice.* IEEE Symposium on Security and Privacy. arXiv:2103.05633.
 
-[2] Zhang, R., Liu, J., Ding, Y., Wang, Z., Wu, Q., & Ren, K. (2022). *"Adversarial Examples" for Proof-of-Learning.* IEEE Symposium on Security and Privacy.
+[2] Zhang, R., Liu, J., Ding, Y., Wu, Z., Wang, Q., & Ren, K. (2022). *"Adversarial Examples" for Proof-of-Learning.* IEEE Symposium on Security and Privacy 2022. arXiv:2108.09454.
 
 [3] Srivastava, M., Arora, S., & Boneh, D. (2024). *Optimistic Verifiable Training by Controlling Hardware Nondeterminism.* arXiv:2403.09603.
 
-[4] Xing, Z., Wang, J., Wang, Z., et al. (2025). *A Survey of Zero-Knowledge Proof Based Verifiable Machine Learning.* arXiv:2502.18535.
+[4] Peng, Z., Zhao, J., Wang, R., Liao, X., Lin, J., Liu, Y., Cao, J., Shi, Y., Yang, L., & Zhang, M. (2025). *A Survey of Zero-Knowledge Proof Based Verifiable Machine Learning.* arXiv:2502.18535.
 
-[5] Zhang, W., Gupta, S., Lian, X., & Liu, J. (2016). *Staleness-aware Async-SGD for Distributed Deep Learning.* IJCAI.
+[5] Zhang, W., Gupta, S., Lian, X., & Liu, J. (2016). *Staleness-aware Async-SGD for Distributed Deep Learning.* IJCAI 2016, pp. 2350–2356. arXiv:1511.05950.
 
-[6] Chen, Y., Ning, Y., Slawski, M., & Rangwala, H. (2021). *FedSA: A staleness-aware asynchronous Federated Learning algorithm with non-IID data.* Future Generation Computer Systems.
+[6] Chen, M., Mao, B., & Ma, T. (2021). *FedSA: A staleness-aware asynchronous Federated Learning algorithm with non-IID data.* Future Generation Computer Systems, vol. 120.
 
-[7] *Dynamic Staleness Control for Asynchronous Federated Learning in Decentralized Topology.* (2024). Springer LNCS.
+[7] Ma, L., Liu, Y., Jia, S., Zhou, J., Hu, Y., & Xie, X. (2024). *Dynamic Staleness Control for Asynchronous Federated Learning in Decentralized Topology.* WASA 2024, Springer LNCS vol. 14998. DOI 10.1007/978-3-031-71467-2_9.
 
-[8] *FedPSA: Modeling Behavioral Staleness in Asynchronous Federated Learning.* arXiv:2602.15337.
+[8] Lu, C., Sun, Y., Yang, Z., Chen, J., Yin, D., & Zhu, J. (2026). *FedPSA: Modeling Behavioral Staleness in Asynchronous Federated Learning.* arXiv:2602.15337.
 
-[9] Wilhelmi, F., Guerra, E., & Dini, P. (2023). *The Implications of Decentralization in Blockchained Federated Learning: Evaluating the Impact of Model Staleness and Inconsistencies.* arXiv:2310.07471.
+[9] Wilhelmi, F., Afraz, N., Guerra, E., & Dini, P. (2023). *The Implications of Decentralization in Blockchained Federated Learning: Evaluating the Impact of Model Staleness and Inconsistencies.* arXiv:2310.07471.
 
-[10] Fang, L., & Gong, N. Z. (2021). *On the Robustness of Proof-of-Learning.* Follow-up analysis of PoL spoofability.
+[10] Fang, C., Jia, H., Thudi, A., Yaghini, M., Choquette-Choo, C. A., Dullerud, N., Chandrasekaran, V., & Papernot, N. (2022). *Proof-of-Learning is Currently More Broken Than You Think.* arXiv:2208.03567.
 
-[11] Zheng, Z., Cao, S., & Su, Z. (2023). *Zero-Knowledge Proof-based Verifiable Decentralized Machine Learning in Communication Network: A Comprehensive Survey.* arXiv:2310.14848.
+[11] Xing, Z., Zhang, Z., Zhang, et al. (2023). *Zero-Knowledge Proof-based Verifiable Decentralized Machine Learning in Communication Network: A Comprehensive Survey.* arXiv:2310.14848.
 
-[12] Adams, H., Zinsmeister, N., Salem, M., Keefer, R., & Robinson, D. (2021). *Uniswap v3 Core.* Time-weighted average price oracle construction and related DeFi literature on context verification.
+[12] Adams, H., Zinsmeister, N., Salem, M., Keefer, R., & Robinson, D. (2021). *Uniswap v3 Core.* Uniswap whitepaper, March 2021. Time-weighted average price oracle construction and related DeFi literature on context verification.
 
-[13] Lee, H., Jin, S., Lee, J., & Ko, M. (2025). *Verifiable Dropout: Cryptographic Integrity for Stochastic Operations in Cloud AI Training.* arXiv:2512.22526.
+[13] Lee, H., Lee, J., Jin, S., & Ko, M. (2025). *Verifiable Dropout: Turning Randomness into a Verifiable Claim.* arXiv:2512.22526.
 
-[14] Gensyn / Verde team. (2025). *Verde: Verifiable ML Training via Refereed Delegation with Deterministic Replay.* arXiv:2502.19405.
+[14] Arun, A., St. Arnaud, T., Titov, A., Wilcox, B., Kolobaric, V., Brinkmann, M., Ersoy, O., Fielding, B., & Bonneau, J. (Gensyn). (2025). *Verde: Verification via Refereed Delegation for Machine Learning Programs.* arXiv:2502.19405.
 
-[15] Ong, K., Tran, A., et al. (Prime Intellect). (2025). *TOPLOC: A Locality Sensitive Hashing Scheme for Trustless Verifiable Inference.* arXiv:2501.16007. ICML 2025.
+[15] Ong, J. M., Di Ferrante, M., Pazdera, A., Garner, R., Jaghouar, S., Basra, M., Ryabinin, M., & Hagemann, J. (Prime Intellect). (2025). *TOPLOC: A Locality Sensitive Hashing Scheme for Trustless Verifiable Inference.* arXiv:2501.16007.
 
 [16] Chantasantitam, T., Caulfield, T., Duddu, V., Gunn, L., & Asokan, N. (2026). *PAL\*M: Property Attestation for Large Generative Models.* arXiv:2601.16199.
 
-[17] Gupta, A. (2025). *Contextual Integrity Verification (CIV): Per-Token Provenance and Trust-Lattice Attention.* arXiv:2508.09288.
+[17] Gupta, A. (2025). *Can AI Keep a Secret? Contextual Integrity Verification: A Provable Security Architecture for LLMs.* arXiv:2508.09288.
 
 [18] Rhodes, S., Rao, A. (Opentensor Foundation). (2024). *Weight Copying in Bittensor: A Working Paper.* [docs.learnbittensor.org/papers/BT_Weight_Copier-29May2024.pdf](https://docs.learnbittensor.org/papers/BT_Weight_Copier-29May2024.pdf).
 
 [19] Bruschi, P., Esposito, F., Gagliardoni, T., & Rizzini, F. (2025). *SoK: Verifiable Federated Learning.* IACR ePrint 2025/2296.
 
-[20] *A Framework for Cryptographic Verifiability of End-to-End AI Pipelines.* (2025). arXiv:2503.22573.
+[20] Balan, O., Learney, R., & Wood, G. (2025). *A Framework for Cryptographic Verifiability of End-to-End AI Pipelines.* arXiv:2503.22573.
 
-[21] Baser, D., et al. (2026). *TensorCommitments: Tensor-Native Proof-of-Inference with 0.97% Overhead.* arXiv:2602.12630.
+[21] Baser, O., Sadeghi, A., Wang, J., Alves, M., Kazemian, H., Kang, S., Chinchali, S., & Vishwanath, S. (2026). *TensorCommitments: A Lightweight Verifiable Inference for Language Models.* arXiv:2602.12630. Reports 0.97% overhead on LLaMA2.
 
-[22] Prime Intellect. (2025). *INTELLECT-2: Decentralized Reinforcement Learning at 32B Parameters.* arXiv:2505.07291. See also: *PCCL: Prime Collective Communication Library.* arXiv:2505.14065.
+[22] Prime Intellect. (2025). *INTELLECT-2: A Reasoning Model Trained Through Globally Decentralized Reinforcement Learning.* arXiv:2505.07291. See also: *Prime Collective Communications Library — Technical Report.* arXiv:2505.14065.
 
-[23] *ChainDrive-FL-VRA: Zero-Knowledge Proof and Staleness-Aware Aggregation for Blockchain Federated Learning.* (2026). Nature Scientific Reports.
+[23] Chen, H., Zhou, R., Chan, Y.-H., Jiang, Z., Chen, X., & Ngai, E. C. H. (2025). *LiteChain: A Lightweight Blockchain for Verifiable and Scalable Federated Learning in Massive Edge Networks.* arXiv:2503.04140.
 
-[24] *LiteChain: Staleness-Aware Aggregation with BFT Consensus for Decentralized Federated Learning.* (2025). arXiv:2503.04140.
+[24] Xu, Z., Zhang, Y., Ge, X., Li, J., Hu, Z., Zhang, W., Li, Z., & Chen, K. (2026). *Securing Retrieval-Augmented Generation: A Taxonomy of Attacks, Defenses, and Future Directions.* arXiv:2604.08304.
 
-[25] *Can AI Solve the Blockchain Oracle Problem?* (2025). arXiv:2507.02125.
+[25] Caldarelli, G. (2025). *Can Artificial Intelligence solve the blockchain oracle problem? Unpacking the Challenges and Possibilities.* arXiv:2507.02125.
 
-[26] *Securing Retrieval-Augmented Generation: A Survey of Threats and Defenses.* (2026). arXiv:2604.08304.
+[26] Mouzouni, C. (2026). *Context Kubernetes: Declarative Orchestration of Enterprise Knowledge for Agentic AI Systems.* arXiv:2604.11623.
 
-[27] *Context Kubernetes: Enterprise Orchestration of LLM Context with Freshness-Aware State Management.* (2026). arXiv:2604.11623.
+[27] Zhang, J. (2026). *Right to History: A Sovereignty Kernel for Verifiable AI Agent Execution.* arXiv:2602.20214.
 
-[28] *Right to History: Verifiable Agent Execution Ledgers for Autonomous AI.* (2026). arXiv:2602.20214.
+[28] Supra Research. (2025). *Threshold AI Oracles: Verified AI for Event-Driven Web3.* [supra.com/documents/Threshold_AI_Oracles_Supra.pdf](https://supra.com/documents/Threshold_AI_Oracles_Supra.pdf), 22 May 2025.
 
-[29] Supra Research. (2025). *Threshold AI Oracles.* [supra.com/documents/Threshold_AI_Oracles_Supra.pdf](https://supra.com/documents/Threshold_AI_Oracles_Supra.pdf).
+[29] OpenGradient Foundation. (2026). *OpenGradient: Decentralized Infrastructure for Verifiable AI Execution.* Whitepaper, March 2026. [opengradient.foundation/whitepaper](https://opengradient.foundation/whitepaper).
 
-[30] OpenGradient Foundation. (2026). *OpenGradient Whitepaper.* [opengradient.foundation/whitepaper](https://opengradient.foundation/whitepaper).
-
-[31] Author's prior work: [github.com/asastuai](https://github.com/asastuai) — Hermetic Computing, intent-cipher, SUR Protocol, LiquidClaw Finance, PayClaw, BaseOracle, TrustLayer.
+[30] Author's prior work: [github.com/asastuai](https://github.com/asastuai) — Hermetic Computing, intent-cipher, SUR Protocol, LiquidClaw Finance, PayClaw, BaseOracle, TrustLayer.
 
 ---
 
@@ -263,11 +261,13 @@ This paper emerged from a 46-day human-AI research collaboration documented in t
 
 This paper is released under CC BY 4.0. To cite:
 
-> Maisu, J. C. (2026). *Proof-of-Context: The Missing Verification Layer in Decentralized ML Protocols* (Version 0.3) [Position paper]. github.com/asastuai/proof-of-context, 22 April 2026.
+> Maisu, J. C. (2026). *Proof-of-Context: The Missing Verification Layer in Decentralized ML Protocols* (Version 0.3.1) [Position paper]. github.com/asastuai/proof-of-context, 22 April 2026.
 
 ---
 
 ## Revision note
+
+**v0.3.1 (22 April 2026, reference corrections patch):** A post-publication audit against primary sources (arxiv.org, journal pages, publisher PDFs) revealed systematic errors in the v0.3 reference list, introduced during Phase 2 literature survey when titles reported by background-research agents were propagated without independent verification. Specifically: (a) reference to "ChainDrive-FL-VRA" in Nature Scientific Reports — this paper does not exist, the citation has been removed and in-text mention of "ChainDrive-FL-VRA" in §3.1 replaced with accurate reference to LiteChain [23]; (b) reference to Fang & Gong (2021) "On the Robustness of Proof-of-Learning" — no such paper exists; replaced with the real follow-up paper by the same research lineage as [1], namely Fang, Jia, Thudi, et al. (2022) "Proof-of-Learning is Currently More Broken Than You Think" (arXiv:2208.03567); (c) fifteen further references had paraphrased titles (a known LLM failure mode termed *title-paraphrasing drift* — the arXiv IDs and author lists resolve to real papers, but titles had been rewritten by upstream research agents with topic-adjacent buzzwords); these have been corrected to the verbatim titles as recorded on arxiv.org. Author lists have also been corrected where wrong authors had been cited (refs [4], [6], [11], [12] updated). Venue claim on TOPLOC [15] corrected from "ICML 2025" (unsupported) to arXiv-only. Reference [29] (Supra) date corrected from 2026 to 2025. No substantive change to arguments, claims, or conclusions of the paper — all primary findings hold on the basis of correctly-cited sources. This correction is published as a full patch rather than a silent edit because academic integrity requires that errors in the published record be acknowledged with the same timestamp visibility as the original record.
 
 **v0.3 (22 April 2026):** Incorporated Phase 2 literature survey findings. Abstract revised to acknowledge closest-adjacency prior art explicitly (Verifiable Dropout, TOPLOC, PAL\*M, CIV, Bittensor Commit-Reveal) and to sharpen the novelty claims as (a) naming, (b) cross-phase unification under a decentralized-marketplace threat model, (c) cross-domain DeFi analogy, (d) extension to prompt-cache integrity, and (e) composable-primitive framing. §2 Background expanded from three primitives to five (added refereed delegation / Verde and inference-activation LSH / TOPLOC). §3 Related Work restructured with eleven subsections. §3.6 in particular distinguishes proof-of-context from PAL\*M along four formal axes (subject of attestation, semantics of freshness, position in the workflow, cache-state coverage). §4 Gap expanded with TOPLOC's explicit uncovered-attack-surface acknowledgements. §6 Modes revised to note partial coverage by existing primitives per mode. §8 Research Program constraint (5) expanded with a composition map over Verifiable Dropout, TOPLOC, Verde, and Bittensor, and constraint (6) added importing DeFi freshness semantics (heartbeat, deviation, quorum, circuit breakers). §9 Conclusion strengthened with a nine-protocol survey summary. References expanded from 13 to 31. The full Phase 2 research landscape is documented in `RESEARCH-LANDSCAPE-v2.md` in the paper's git repository. v0.2 and v0.1 commits remain in git history for priority purposes.
 
