@@ -7,8 +7,17 @@ authors:
     orcid: ""
     affiliation: "Independent Researcher, Buenos Aires, Argentina"
     email: "juancmaisu@outlook.com"
-version: "0.2"
-date-released: "2026-04-21"
+version: "0.6"
+date-released: "2026-04-22"
+references:
+  - type: article
+    title: "Proof of Context applied to Verifiable Inference: A Receipt-Based Dispute Layer over TEE-Attested Commercial Inference"
+    authors:
+      - family-names: "Maisu"
+        given-names: "Juan Cruz"
+    year: 2026
+    notes: "PoC-Inference v0.1, working draft pre-1; heart sections complete, surrounding sections forthcoming. Published 2026-04-27."
+    url: "https://github.com/asastuai/proof-of-context"
 url: "https://github.com/asastuai/proof-of-context"
 license: "CC-BY-4.0"
 type: "article"
